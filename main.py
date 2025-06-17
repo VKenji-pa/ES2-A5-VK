@@ -1,33 +1,64 @@
 from lanchonete import *
 
-def pedido(menu):
-    print("Bem-vindo à Lanchonete!")
+def pedido(menu=Menu()):
     if not menu:
+        print("Sem produtos cadastrados")
         return
     
-    carrinho = escolher_itens(menu)
-    if not carrinho:
+    carrinho = Carrinho()
+    while True:
+        print("\nBem-vindo à Lanchonete!")
+        menu.mostrar_menu()
+        print("\nTotal do carrinho: R$ {:.2f}".format(sum(item['preco'] for item in carrinho.get_lista())))
+        escolha = input("Digite:\n"
+                        "- O código do item para adicionar ao carrinho, ou\n"
+                        "- 'fim' para finalizar, ou\n"
+                        "- 'corrigir' para remover o ultimo item inserido\n").strip()
+        
+        if escolha.lower() == 'fim':
+            break
+        elif escolha.lower() == 'corrigir':
+            carrinho.remove()
+        else:
+            try:
+                codigo_item = int(escolha)
+                if 0 < codigo_item <= len(menu.get()):
+                    item = menu.get()[codigo_item - 1]
+                    carrinho.add(item)
+                    print(f"{item['nome']} adicionado ao carrinho.")
+                else:
+                    print("Código inválido. Esse item não existe no menu.")
+            except ValueError:
+                print("Entrada inválida. Por favor, digite um número, 'fim' ou 'corrigir'.")
+
+
+    if not carrinho.get_lista():
         print("Nenhum item selecionado.")
         return
-    print("\nSeu carrinho:")
-    for item in carrinho:
-        print(f"- {item['nome']} - R$ {item['preco']:.2f}")
+    
+    print(carrinho.conteudo())
+    print(f"=== TOTAL: R$ {carrinho.get_total()}\n")
+
     confirmar = input("Deseja confirmar o pedido? (s/n): ").strip().lower()
+    
     if confirmar == 's':
-        gerar_recibo(carrinho, 'recibo.txt')
+        f = open('recibo.txt', 'w')
+        f.write(carrinho.conteudo()
+                + f"\n=== TOTAL: R$ {carrinho.get_total()}")
+        print("\nRECIBO GERADO\n")
     else:
         print("Pedido cancelado.")
 
-def admin(menu):
+def admin(menu=Menu()):
     while True:
         os.system('cls' if os.name == 'nt' else 'clear')
         
-        if not menu:
-            print("Nenhum item no menu.")
+        if not menu.get():
+            print("== Nenhum item no menu ==\n")
         else:
-            mostrar_menu(menu)
+            menu.mostrar_menu()
         
-        print("1 - Adicionar Item ao Menu\n"
+        print("\n1 - Adicionar Item ao Menu\n"
             "2 - Remover Item do Menu\n"
             "3 - Sair")
         
@@ -35,20 +66,27 @@ def admin(menu):
         
         match opt:
             case '1':
-                adicionar_item(menu)                
+                item = {}
+                item['nome'] = input("Informe o item a ser adicionado: ").strip()
+                while True:
+                    item['preco'] = float(input("Informe o valor do produto: "))
+                    if item['preco'] >= 0:
+                        break     
+                               
             case '2':
-                if not menu:
+                if not menu.get():
                     print("Nenhum item no menu para remover.")
                 else:
-                    codigo = input("Digite o código do item a ser removido: ").strip()
-                    remover_item(codigo, menu)
+                    codigo = int(input("Digite o código do item a ser removido: ").strip())
+                    menu.remover_item(codigo)
             case '3':
                 break
             
 def main():
-    menu = []
+    menu = Menu()
+    menu.ler_menu('menu.txt')
     while True:
-        print("Lanchonete - Sistema de Pedidos")
+        print("\nLanchonete - Sistema de Pedidos")
         print("1 - Fazer Pedido\n"
             "2 - Sair\n"
             "0 - Admin")

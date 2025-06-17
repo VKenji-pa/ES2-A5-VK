@@ -1,7 +1,6 @@
-=== RECIBO ===
- pao de queijo - R$ 3.00
- pao de queijo - R$ 3.00
- coca_cola - R$ 3.50
- coca_cola - R$ 3.50
+=== Carrinho ===
+pao de queijo - R$ 2.00
+pao de queijo - R$ 2.00
+pao de queijo - R$ 2.00
 
-TOTAL: R$ 13.00
+=== TOTAL: R$ 6.0

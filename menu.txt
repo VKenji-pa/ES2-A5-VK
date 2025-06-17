@@ -1,5 +1,5 @@
-1; pao de queijo; 2.00
-2; coca_cola; 3.50
-3; pudim; 5.00
-4; chiclete; 1.00
-5; empada de camarao; 4.00
+pao de queijo; 2.00
+coca_cola; 3.50
+pudim; 5.00
+chiclete; 1.00
+empada de camarao; 4.00
