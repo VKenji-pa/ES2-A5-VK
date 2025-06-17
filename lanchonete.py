@@ -6,6 +6,10 @@ class Carrinho:
     _valor_total = 0
     _lista = []
     
+    def __init__(self):
+        self._valor_total = 0
+        self._lista = []
+    
     def get_total(self):
         return self._valor_total
     
@@ -32,6 +36,9 @@ class Carrinho:
     
 class Menu:
     _lista = []
+    
+    def __init__(self):
+        self._lista = []
     
     def get(self):
         return self._lista
