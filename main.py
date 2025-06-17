@@ -1,5 +1,6 @@
 from lanchonete import *
 
+# INTERFACE E CONTROLE PARA REALIZAR PEDIDOS (CONSOLE)
 def pedido(menu=Menu()):
     if not menu:
         print("Sem produtos cadastrados")
@@ -49,6 +50,7 @@ def pedido(menu=Menu()):
     else:
         print("Pedido cancelado.")
 
+# PAINEL DO ADMIN - PODE CONTROLAR OS PRODUTOS
 def admin(menu=Menu()):
     while True:
         os.system('cls' if os.name == 'nt' else 'clear')
@@ -81,7 +83,8 @@ def admin(menu=Menu()):
                     menu.remover_item(codigo)
             case '3':
                 break
-            
+
+# MENU INTRODUTÓRIO BÁSICO
 def main():
     menu = Menu()
     menu.ler_menu('menu.txt')
