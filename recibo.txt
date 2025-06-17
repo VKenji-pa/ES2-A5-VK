@@ -1,0 +1,7 @@
+=== RECIBO ===
+ pao de queijo - R$ 3.00
+ pao de queijo - R$ 3.00
+ coca_cola - R$ 3.50
+ coca_cola - R$ 3.50
+
+TOTAL: R$ 13.00
